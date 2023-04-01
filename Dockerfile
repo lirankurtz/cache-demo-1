@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:alpine
 # LABEL MAINTAINER Michael Hueter <mthueter@gmail.com>
 
 RUN npm install pm2@latest --global --quiet
