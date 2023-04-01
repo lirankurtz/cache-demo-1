@@ -1,5 +1,5 @@
 FROM node:16
-LABEL MAINTAINER Michael Hueter <mthueter@gmail.com>
+# LABEL MAINTAINER Michael Hueter <mthueter@gmail.com>
 
 RUN npm install pm2@latest --global --quiet
 

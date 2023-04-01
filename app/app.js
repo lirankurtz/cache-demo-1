@@ -28,8 +28,15 @@ app.use(bodyParserHandler); // error handling specific to body parser only
 // response headers setup; CORS
 app.use(globalResponseHeaders);
 
-app.use("/things", thingsRouter);
-
+// Getting rid of this
+//app.use("/things", thingsRouter);
+app.get("/", (request, response, next) => {
+  const retVal = {
+    success: true,
+    message: "Hello Cache demo!",
+  }
+  return response.json(retVal);
+});
 // catch-all for 404 "Not Found" errors
 app.get("*", fourOhFourHandler);
 // catch-all for 405 "Method Not Allowed" errors
