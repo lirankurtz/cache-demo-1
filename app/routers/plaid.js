@@ -127,16 +127,15 @@ router.route('/').get(function (request, response, next) {
 router.route('/test').get(function (request, response, next) {
   Promise.resolve()
     .then(async function () {
-      const document = firestore.doc('users/A4YC5hpO6VBg9ZmZPybB');
-      await document.set({
-        plaid_access_token: 'Code set token',
+      const token = await getAccessToken();
+      console.log("Got token:", token);
+      response.json({
+        // the 'access_token' is a private token, DO NOT pass this token to the frontend in your production environment
+        access_token: token,
+        item_id: ITEM_ID,
+        error: null,
       });
-      const doc = await document.get();
-      const token = doc.data().plaid_access_token;
-      const retValue = {
-        token,
-      }
-      response.json(retValue);
+      //response.json(retValue);
     })
     .catch(next);
 });
@@ -148,10 +147,10 @@ async function getAccessToken() {
   return token;
 }
 
-router.route('/info').post(function (request, response, next) {
+router.route('/info').post(async function (request, response, next) {
   response.json({
     item_id: ITEM_ID,
-    access_token: getAccessToken(),
+    access_token: await getAccessToken(),
     products: PLAID_PRODUCTS,
   });
 });
@@ -275,7 +274,7 @@ router.route('/set_access_token').post(function (request, response, next) {
       }
       response.json({
         // the 'access_token' is a private token, DO NOT pass this token to the frontend in your production environment
-        access_token: getAccessToken(),
+        access_token: await getAccessToken(),
         item_id: ITEM_ID,
         error: null,
       });
@@ -289,7 +288,7 @@ router.route('/auth').get(function (request, response, next) {
   Promise.resolve()
     .then(async function () {
       const authResponse = await client.authGet({
-        access_token: getAccessToken(),
+        access_token: await getAccessToken(),
       });
       prettyPrintResponse(authResponse);
       response.json(authResponse.data);
@@ -314,7 +313,7 @@ router.route('/transactions').get(function (request, response, next) {
       // Iterate through each page of new transaction updates for item
       while (hasMore) {
         const request = {
-          access_token: getAccessToken(),
+          access_token: await getAccessToken(),
           cursor: cursor,
         };
         const response = await client.transactionsSync(request)
@@ -345,7 +344,7 @@ router.route('/investments_transactions').get(function (request, response, next)
       const startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');
       const endDate = moment().format('YYYY-MM-DD');
       const configs = {
-        access_token: getAccessToken(),
+        access_token: await getAccessToken(),
         start_date: startDate,
         end_date: endDate,
       };
@@ -366,7 +365,7 @@ router.route('/identity').get(function (request, response, next) {
   Promise.resolve()
     .then(async function () {
       const identityResponse = await client.identityGet({
-        access_token: getAccessToken(),
+        access_token: await getAccessToken(),
       });
       prettyPrintResponse(identityResponse);
       response.json({ identity: identityResponse.data.accounts });
@@ -380,7 +379,7 @@ router.route('/balance').get(function (request, response, next) {
   Promise.resolve()
     .then(async function () {
       const balanceResponse = await client.accountsBalanceGet({
-        access_token: getAccessToken(),
+        access_token: await getAccessToken(),
       });
       prettyPrintResponse(balanceResponse);
       response.json(balanceResponse.data);
@@ -394,7 +393,7 @@ router.route('/holdings').get(function (request, response, next) {
   Promise.resolve()
     .then(async function () {
       const holdingsResponse = await client.investmentsHoldingsGet({
-        access_token: getAccessToken(),
+        access_token: await getAccessToken(),
       });
       prettyPrintResponse(holdingsResponse);
       response.json({ error: null, holdings: holdingsResponse.data });
@@ -408,7 +407,7 @@ router.route('/liabilities').get(function (request, response, next) {
   Promise.resolve()
     .then(async function () {
       const liabilitiesResponse = await client.liabilitiesGet({
-        access_token: getAccessToken(),
+        access_token: await getAccessToken(),
       });
       prettyPrintResponse(liabilitiesResponse);
       response.json({ error: null, liabilities: liabilitiesResponse.data });
@@ -424,7 +423,7 @@ router.route('/item').get(function (request, response, next) {
       // Pull the Item - this includes information about available products,
       // billed products, webhook information, and more.
       const itemResponse = await client.itemGet({
-        access_token: getAccessToken(),
+        access_token: await getAccessToken(),
       });
       // Also pull information about the institution
       const configs = {
@@ -447,7 +446,7 @@ router.route('/accounts').get(function (request, response, next) {
   Promise.resolve()
     .then(async function () {
       const accountsResponse = await client.accountsGet({
-        access_token: getAccessToken(),
+        access_token: await getAccessToken(),
       });
       prettyPrintResponse(accountsResponse);
       response.json(accountsResponse.data);
