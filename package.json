@@ -19,7 +19,8 @@
     "jsonschema": "1.4.0",
     "moment": "^2.29.4",
     "mongoose": "6.1.4",
-    "plaid": "^13.0.0"
+    "plaid": "^13.0.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
