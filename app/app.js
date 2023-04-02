@@ -19,7 +19,7 @@ const {
 } = errorHandler;
 
 // database
-connectToDatabase();
+// connectToDatabase();
 
 // body parser setup
 app.use(express.urlencoded({ extended: true }));
