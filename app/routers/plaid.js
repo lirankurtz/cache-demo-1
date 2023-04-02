@@ -268,7 +268,7 @@ router.route('/set_access_token').post(function (request, response, next) {
       ITEM_ID = tokenResponse.data.item_id;
       const document = firestore.doc('users/A4YC5hpO6VBg9ZmZPybB');
       await document.set({
-        plaid_access_token: 'Code set token',
+        plaid_access_token: ACCESS_TOKEN,
       });
       if (PLAID_PRODUCTS.includes(Products.Transfer)) {
         TRANSFER_ID = await authorizeAndCreateTransfer(ACCESS_TOKEN);
