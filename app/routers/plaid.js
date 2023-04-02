@@ -38,8 +38,8 @@ const router = new express.Router();
 
 
 //const APP_PORT = process.env.APP_PORT || 8000;
-const PLAID_CLIENT_ID = process.env.PLAID_CLIENT_ID || '640b70edf97d8b0013e36403';
-const PLAID_SECRET = process.env.PLAID_SECRET || '5f457e5638d52afe63bd6f47831c69';
+const PLAID_CLIENT_ID = process.env.PLAID_CLIENT_ID;
+const PLAID_SECRET = process.env.PLAID_SECRET;
 const PLAID_ENV = process.env.PLAID_ENV || 'sandbox';
 
 //console.log("Starting index code on post: ", APP_PORT);
