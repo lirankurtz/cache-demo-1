@@ -6,6 +6,7 @@ const express = require("express");
 const { connectToDatabase, globalResponseHeaders } = require("./config");
 const { errorHandler } = require("./handlers");
 const { thingsRouter } = require("./routers");
+const { plaidRouter } = require("./routers");
 
 // global constants
 dotenv.config();
@@ -29,7 +30,8 @@ app.use(bodyParserHandler); // error handling specific to body parser only
 app.use(globalResponseHeaders);
 
 // Getting rid of this
-//app.use("/things", thingsRouter);
+app.use("/things", thingsRouter);
+app.use("/api", plaidRouter);
 app.get("/", (request, response, next) => {
   const retVal = {
     success: true,
