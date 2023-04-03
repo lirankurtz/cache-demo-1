@@ -1,7 +1,5 @@
 'use strict';
 
-// npm packages
-// const express = require("express");
 // read env vars from .env file
 require('dotenv').config();
 const { Configuration, PlaidApi, Products, PlaidEnvironments} = require('plaid');
@@ -11,36 +9,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const moment = require('moment');
 const {Firestore} = require('@google-cloud/firestore');
-//const cors = require('cors');
-//const { route } = require('../app');
-// app imports
-// const { thingHandler, thingsHandler } = require("../handlers");
 
-// globals
 const router = new express.Router();
 const firestore = new Firestore();
 
-// const { readThings } = thingsHandler;
-// const { createThing, readThing, updateThing, deleteThing } = thingHandler;
-
-/* All the Things Route */
-// router
-//   .route("")
-//   .get(readThings)
-//   .post(createThing);
-
-/* Single Thing by Name Route */
-// router
-//   .route("/:name")
-//   .get(readThing)
-//   .patch(updateThing)
-//   .delete(deleteThing);
-
-
-
-
-
-//const APP_PORT = process.env.APP_PORT || 8000;
 const PLAID_CLIENT_ID = process.env.PLAID_CLIENT_ID;
 const PLAID_SECRET = process.env.PLAID_SECRET;
 const PLAID_ENV = process.env.PLAID_ENV || 'sandbox';
@@ -103,14 +75,6 @@ const configuration = new Configuration({
 
 const client = new PlaidApi(configuration);
 
-// const app = express();
-// app.use(
-//   bodyParser.urlencoded({
-//     extended: false,
-//   }),
-// );
-// app.use(bodyParser.json());
-// app.use(cors());
 
 router.route('/').get(function (request, response, next) {
   Promise.resolve()
@@ -557,11 +521,6 @@ router.use('/api*', function (error, request, response, next) {
   prettyPrintResponse(error.response);
   response.json(formatError(error.response));
 });
-
-// console.log("Starting to listen on port: ", APP_PORT);
-// const server = app.listen(APP_PORT, function () {
-//   console.log('plaid-quickstart server listening on port ' + APP_PORT);
-// });
 
 const prettyPrintResponse = (response) => {
   console.log(util.inspect(response.data, { colors: true, depth: 4 }));

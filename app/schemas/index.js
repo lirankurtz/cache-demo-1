@@ -1,2 +1,1 @@
-exports.thingNewSchema = require('./thingNew');
-exports.thingUpdateSchema = require('./thingUpdate');
+// Schemas for mongooes can be here

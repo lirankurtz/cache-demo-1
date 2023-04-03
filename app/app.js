@@ -5,7 +5,6 @@ const express = require("express");
 // app imports
 const { connectToDatabase, globalResponseHeaders } = require("./config");
 const { errorHandler } = require("./handlers");
-const { thingsRouter } = require("./routers");
 const { plaidRouter } = require("./routers");
 
 // global constants
@@ -29,8 +28,6 @@ app.use(bodyParserHandler); // error handling specific to body parser only
 // response headers setup; CORS
 app.use(globalResponseHeaders);
 
-// Getting rid of this
-app.use("/things", thingsRouter);
 app.use("/api", plaidRouter);
 app.get("/", (request, response, next) => {
   const retVal = {
@@ -39,6 +36,7 @@ app.get("/", (request, response, next) => {
   }
   return response.json(retVal);
 });
+
 // catch-all for 404 "Not Found" errors
 app.get("*", fourOhFourHandler);
 // catch-all for 405 "Method Not Allowed" errors
@@ -46,8 +44,4 @@ app.all("*", fourOhFiveHandler);
 
 app.use(globalErrorHandler);
 
-/**
- * This file does NOT run the app. It merely builds and configures it then exports it.config
- *  This is for integration tests with supertest (see __tests__).
- */
 module.exports = app;

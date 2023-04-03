@@ -1,1 +1,1 @@
-exports.Thing = require("./Thing");
+// Models for DB might be here
