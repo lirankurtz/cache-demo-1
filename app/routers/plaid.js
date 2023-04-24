@@ -133,6 +133,11 @@ router.route('/create_link_token').post(function (request, response, next) {
         products: PLAID_PRODUCTS,
         country_codes: PLAID_COUNTRY_CODES,
         language: 'en',
+        account_filters: {
+          depository: {
+            account_subtypes: ["checking", "savings"],
+          },
+        },
       };
 
       if (PLAID_REDIRECT_URI !== '') {
