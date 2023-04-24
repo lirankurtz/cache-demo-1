@@ -124,6 +124,7 @@ router.route('/info').post(async function (request, response, next) {
 router.route('/create_link_token').post(function (request, response, next) {
   Promise.resolve()
     .then(async function () {
+      console.log("Setting account filters");
       const configs = {
         user: {
           // This should correspond to a unique id for the current user.
